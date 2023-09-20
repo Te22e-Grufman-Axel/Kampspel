@@ -47,7 +47,7 @@ while (true)
             Console.WriteLine("Name 2: Villan");
             Console.WriteLine("Namn 3; opponent");
             Console.WriteLine("Namn 4: Eget namn");
-            Console.WriteLine("Nammnet är just nu "+ aiName);
+            Console.WriteLine("Nammnet är just nu " + aiName);
             nameval = Console.ReadLine();
             nameval = nameval.ToLower();
             {
