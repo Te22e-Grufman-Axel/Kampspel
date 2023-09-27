@@ -10,7 +10,7 @@ int hardattackmisschansplayer = 40;
 int lightattackmisschansai = 20;
 int hardattackmisschansai = 40;
 
-String curentenemy = "";
+String curentenemy = "2";
 String inst = "";
 String instval = "";
 String Spelarename = ("Hero");
@@ -143,9 +143,6 @@ while (true)
         Console.WriteLine(lightattackmisschansai + "% i misschans när han gör en light attack");
         Console.WriteLine(hardattackmisschansai + "% i misschans när han gör en light attack");
 
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
         Console.WriteLine("För att ändra gubbe välj mellan dom här nere");
         Console.WriteLine("Super lätt: Sam (0)");
         Console.WriteLine("Lätt: Liam (1)");
@@ -153,21 +150,35 @@ while (true)
         Console.WriteLine("Svår: Neo (3)");
         Console.WriteLine("Omöjlig: Axel (4)");
 
+if(curentenemy == "0")
+{
+fiende0();
+}
+else if (curentenemy == "1")
+{
+fiende1();
+}
+else if (curentenemy == "2")
+{
+fiende2();
+}
+else if (curentenemy == "3")
+{
+fiende3();
+}
+else if (curentenemy == "4")
+{fiende4();
+
+}
 
 
-
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("Välj mellan 0-4 för att välja enemy");
         Console.WriteLine("För att lämmna tryck på space");
-        inst = Console.ReadLine();
+        curentenemy = Console.ReadLine();
 
-        if (inst == " ")
+        if (curentenemy == " ")
         {
             Console.Clear();
             startmeny();
@@ -179,6 +190,7 @@ while (true)
             maxskadaai = 5;
             lightattackmisschansai = 40;
             hardattackmisschansai = 80;
+            Console.Clear();
             väljafiende();
         }
         else if (curentenemy == "1")
@@ -188,6 +200,7 @@ while (true)
             maxskadaai = 15;
             lightattackmisschansai = 30;
             hardattackmisschansai = 60;
+            Console.Clear();
             väljafiende();
         }
         else if (curentenemy == "2")
@@ -197,6 +210,7 @@ while (true)
             maxskadaai = 35;
             lightattackmisschansai = 20;
             hardattackmisschansai = 40;
+            Console.Clear();
             väljafiende();
         }
         else if (curentenemy == "3")
@@ -206,6 +220,7 @@ while (true)
             maxskadaai = 40;
             lightattackmisschansai = 10;
             hardattackmisschansai = 20;
+            Console.Clear();
             väljafiende();
         }
         else if (curentenemy == "4")
@@ -215,7 +230,7 @@ while (true)
             maxskadaai = 50;
             lightattackmisschansai = 5;
             hardattackmisschansai = 10;
-
+            Console.Clear();
             väljafiende();
         }
         else
@@ -371,7 +386,6 @@ while (true)
         Console.WriteLine("Slut på rundor");
     }
 
-
     Console.WriteLine("");
     Console.WriteLine("");
     Console.WriteLine("");
@@ -380,7 +394,121 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
-
-
-
+void fiende0()
+{
+Console.WriteLine(@"   ,=''=,
+  c , _,{
+  /\  @ )                 __
+ /  ^~~^\          <=.,__/ '}=
+(_/ ,, ,,)          \_ _>_/~
+ ~\_(/-\)'-,_,_,_,-'(_)-(_)");
+}
+void fiende1()
+{
+Console.WriteLine(@"   ////\\\\
+      |      |
+     @  O  O  @
+      |  ~   |         \__
+       \ -- /          |\ |
+     ___|  |___        | \|
+    /          \      /|__|
+   /            \    / /
+  /  /| .  . |\  \  / /
+ /  / |      | \  \/ /
+<  <  |      |  \   /
+ \  \ |  .   |   \_/
+  \  \|______|
+    \_|______|
+      |      |
+      |  |   |
+      |  |   |
+      |__|___|
+      |  |  |
+      (  (  |
+      |  |  |
+      |  |  |
+     _|  |  |
+ cccC_Cccc___)");
+}
+void fiende2()
+{
+Console.WriteLine(@"                 ,#####,
+                 #_   _#
+                 |a` `a|
+                 |  u  |
+                 \  =  /
+                 |\___/|
+        ___ ____/:     :\____ ___
+      .'   `.-===-\   /-===-.`   '.
+     /      .-'''''-.-'''''-.      \
+    /'             =:=             '\
+  .'  ' .:    o   -=:=-   o    :. '  `.
+  (.'   /'. '-.....-'-.....-' .'\   '.)
+  /' ._/   '.     --:--     .''   \_. '\
+ |  .'|      '.  ---:---  .'      |'.  |
+ |  : |       |  ---:---  |       | :  |
+  \ : |       |_____._____|       | : /
+  /   (       |----|------|       )   \
+ /... .|      |    |      |      |. ...\
+|::::/''     /     |       \     ''\::::|
+'''''       /'    .L_      `\       '''''
+           /'-.,__/` `\__..-'\
+          ;      /     \      ;
+          :     /       \     |
+          |    /         \.   |
+          |`../           |  ,/
+          ( _ )           |  _)
+          |   |           |   |
+          |___|           \___|
+          :===|            |==|
+           \  /            |__|
+           /\/\           /'''`8.__
+           |oo|           \__.//___)
+           |==|
+           \__/");
+}
+void fiende3()
+{
+Console.WriteLine(@"                     ______
+                   <((((((\\\
+                   /      . }\
+                   ;--..--._|}
+(\                 '--/\--'  )
+ \\                | '-'  :'|
+  \\               . -==- .-|
+   \\               \.__.'   \--._
+   [\\          __.--|       //  _/'--.
+   \ \\       .'-._ ('-----'/ __/      \
+    \ \\     /   __>|      | '--.       |
+     \ \\   |   \   |     /    /       /
+      \ '\ /     \  |     |  _/       /
+       \  \       \ |     | /        /
+        \  \      \        /");
+}
+void fiende4()
+{
+Console.WriteLine(@"       .-''''''-.
+    .-'         '-.
+ __/               \__
+ \     .-'''''-.     /
+  '----//o   o\\----'
+      (    _\   )
+  ,____`\  =  /`____,
+// \   `;'---' `   / \
+\\/     |-o        \//
+|    |  |      |     |
+|    |  |-o    |\    |
+\    `--|      |/    /
+ '._    |-o    |    /
+    '|''|      |  .'
+     |  |-o    |-`
+     |  |      |
+     |_/ \_____|
+      |   |   |
+      |   |   |
+      \'-.|.-'/
+      ]  _|_  [
+     /    |    \
+    /    / \    \
+   (___/`   `\___)");
+}
