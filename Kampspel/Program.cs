@@ -1,48 +1,41 @@
-﻿int spelareHP = 100;
+﻿using System.Diagnostics;
+
+int spelareHP = 100;
 int aihp = 100;
-int maxskada = 35;
-int maxrundor = 5;
+int maxskadaspelaren = 35;
+int maxskadaai = 35;
+int maxrundor = 10;
 int lightattackmisschansplayer = 20;
 int hardattackmisschansplayer = 40;
 int lightattackmisschansai = 20;
 int hardattackmisschansai = 40;
 
-
+String curentenemy = "";
 String inst = "";
 String instval = "";
-String nameval = "";
 String Spelarename = ("Hero");
 String spelaretypavattack = "";
-String aiName = ("Villan");
+String aiName = ("Willmer");
+
 Random Skada = new Random();
 Random misschans = new Random();
+
 while (true)
 {
+    string köranu = "nej";
     int runda = 0;
     int nuvaranespelarhp = spelareHP;
     int nuvaraneaihp = aihp;
     Random aitypavattack = new Random();
     int tmpaitypavattack = aitypavattack.Next(2);
-
-
-
-    Console.WriteLine("Välkomen till Axels slagsmål spel");
-    Console.WriteLine("För att gå in i instälnignar tryck på i");
-    Console.WriteLine("För att välja fiende tryck på F");
-    Console.WriteLine("För att starta spelet tryck på en annan knapp");
-    inst = Console.ReadLine();
-    inst = inst.ToLower();
-    Console.Clear();
-    if (inst == "i")
+    void instälnignar()
     {
         Console.WriteLine("Välkommen till instälnignar");
         Console.WriteLine("Här kan du välja olika instänlnignar");
         Console.WriteLine("Namn på spelaren(N)");
-        Console.WriteLine("Namn på fiende(F)");
         Console.WriteLine("Max attack(A)");
         Console.WriteLine("Max rundor(R)");
         Console.WriteLine("Spelaren hp(S)");
-        Console.WriteLine("Motståndarens hp(M)");
         Console.WriteLine("Din Light attack miss chans(L)");
         Console.WriteLine("Din Hard attack miss chans(H)");
         Console.WriteLine("");
@@ -51,56 +44,27 @@ while (true)
         instval = instval.ToLower();
         if (instval == "n")
         {
+            Console.WriteLine("Här kan du ändra vad din gubbe ska heta");
             Console.WriteLine("Vad vill du ändra nammnet till?");
             Spelarename = Console.ReadLine();
+            Console.Clear();
+            instälnignar();
 
-        }
-        else if (instval == "f")
-        {
-            Console.WriteLine("Välj mellan 3 namn eller skapa dit egna");
-            Console.WriteLine("Namn 1: Enemy");
-            Console.WriteLine("Name 2: Villan");
-            Console.WriteLine("Namn 3; opponent");
-            Console.WriteLine("Namn 4: Eget namn");
-            Console.WriteLine("Nammnet är just nu " + aiName);
-            nameval = Console.ReadLine();
-            nameval = nameval.ToLower();
-            {
-                if (nameval == "1")
-                {
-                    aiName = "Enemy";
-                }
-                if (nameval == "2")
-                {
-                    aiName = "Vilan";
-                }
-                if (nameval == "3")
-                {
-                    aiName = "Opponent";
-                }
-                if (nameval == "4")
-                {
-                    Console.WriteLine("Vad ska han heta?");
-                    aiName = Console.ReadLine();
-                }
-                else
-                {
-                    Console.WriteLine("Vet inte vad du sa, skriv igen");
-                }
-            }
         }
         else if (instval == "a")
         {
-            Console.WriteLine("Vad ska max attack vara?");
-            Console.WriteLine("Just nu är det " + maxskada);
+            Console.WriteLine("Vad ska max attack för spelaren vara?");
+            Console.WriteLine("Just nu är det " + maxskadaspelaren);
 
             string tmpMaxskada = Console.ReadLine();
-            bool success = int.TryParse(tmpMaxskada, out maxskada);
+            bool success = int.TryParse(tmpMaxskada, out maxskadaspelaren);
             if (success == false)
             {
                 Console.WriteLine("Det där var inte en siffra!");
+                Console.ReadKey();
             }
-
+            Console.Clear();
+            instälnignar();
         }
         else if (instval == "r")
         {
@@ -112,7 +76,10 @@ while (true)
             if (success == false)
             {
                 Console.WriteLine("Det där var inte en siffra!");
+                Console.ReadKey();
             }
+            Console.Clear();
+            instälnignar();
         }
         else if (instval == "s")
         {
@@ -124,19 +91,10 @@ while (true)
             if (success == false)
             {
                 Console.WriteLine("Det där var inte en siffra!");
+                Console.ReadKey();
             }
-        }
-        else if (instval == "m")
-        {
-            Console.WriteLine("Vad ska " + aiName + " ha för hp");
-            Console.WriteLine("Just nu är det " + aihp);
-
-            string tmpaihp = Console.ReadLine();
-            bool success = int.TryParse(tmpaihp, out aihp);
-            if (success == false)
-            {
-                Console.WriteLine("Det där var inte en siffra!");
-            }
+            Console.Clear();
+            instälnignar();
         }
         else if (instval == "l")
         {
@@ -148,7 +106,10 @@ while (true)
             if (success == false)
             {
                 Console.WriteLine("Det där var inte en siffra!");
+                Console.ReadKey();
             }
+            Console.Clear();
+            instälnignar();
 
         }
         else if (instval == "h")
@@ -161,19 +122,137 @@ while (true)
             if (success == false)
             {
                 Console.WriteLine("Det där var inte en siffra!");
+                Console.ReadKey();
             }
             else
             {
                 Console.WriteLine("Jag vet inte vad du sa, skriv igen");
             }
+            Console.Clear();
+            instälnignar();
+        }
+
+    }
+    void väljafiende()
+    {
+        Console.WriteLine("Varje fiende har olika styrkor och svagheter");
+        Console.WriteLine("Just nu slåss du mot " + aiName);
+        Console.WriteLine("Hans styrkor och svagheter är");
+        Console.WriteLine(aihp + " i hp");
+        Console.WriteLine(maxskadaai + " I max attack");
+        Console.WriteLine(lightattackmisschansai + "% i misschans när han gör en light attack");
+        Console.WriteLine(hardattackmisschansai + "% i misschans när han gör en light attack");
+
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("För att ändra gubbe välj mellan dom här nere");
+        Console.WriteLine("Super lätt: Sam (0)");
+        Console.WriteLine("Lätt: Liam (1)");
+        Console.WriteLine("Mellan: Willmer (2)");
+        Console.WriteLine("Svår: Neo (3)");
+        Console.WriteLine("Omöjlig: Axel (4)");
+
+
+
+
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("Välj mellan 0-4 för att välja enemy");
+        Console.WriteLine("För att lämmna tryck på space");
+        inst = Console.ReadLine();
+
+        if (inst == " ")
+        {
+            Console.Clear();
+            startmeny();
+        }
+        else if (curentenemy == "0")
+        {
+            aiName = "Sam";
+            aihp = 25;
+            maxskadaai = 5;
+            lightattackmisschansai = 40;
+            hardattackmisschansai = 80;
+            väljafiende();
+        }
+        else if (curentenemy == "1")
+        {
+            aiName = "Liam";
+            aihp = 50;
+            maxskadaai = 15;
+            lightattackmisschansai = 30;
+            hardattackmisschansai = 60;
+            väljafiende();
+        }
+        else if (curentenemy == "2")
+        {
+            aiName = "Wilmer";
+            aihp = 100;
+            maxskadaai = 35;
+            lightattackmisschansai = 20;
+            hardattackmisschansai = 40;
+            väljafiende();
+        }
+        else if (curentenemy == "3")
+        {
+            aiName = "Neo";
+            aihp = 150;
+            maxskadaai = 40;
+            lightattackmisschansai = 10;
+            hardattackmisschansai = 20;
+            väljafiende();
+        }
+        else if (curentenemy == "4")
+        {
+            aiName = "Axel";
+            aihp = 250;
+            maxskadaai = 50;
+            lightattackmisschansai = 5;
+            hardattackmisschansai = 10;
+
+            väljafiende();
+        }
+        else
+        {
+            Console.Clear();
+            väljafiende();
+        }
+    }
+    void startmeny()
+    {
+        Console.Clear();
+        Console.WriteLine("Välkomen till Axels slagsmål spel");
+        Console.WriteLine("För att gå in i instälnignar tryck på i");
+        Console.WriteLine("För att välja fiende tryck på F");
+        Console.WriteLine("För att starta spelet tryck på en annan knapp");
+        inst = Console.ReadLine();
+        inst = inst.ToLower();
+        Console.Clear();
+        if (inst == "i")
+        {
+            instälnignar();
         }
         else if (inst == "f")
         {
-Console.WriteLine("Varje fiende har olika stats");
-Console.WriteLine("Just");
+            väljafiende();
+        }
+        else
+        {
+            köranu = "ja";
         }
     }
-    while (nuvaranespelarhp > 0 && nuvaraneaihp > 0 && runda < maxrundor)
+
+    while (köranu == "nej")
+    {
+        startmeny();
+    }
+    while (nuvaranespelarhp > 0 && nuvaraneaihp > 0 && runda < maxrundor && köranu == "ja")
     {
         Console.WriteLine("          Ny Runda");
         Console.WriteLine("");
@@ -198,7 +277,7 @@ Console.WriteLine("Just");
             }
             else
             {
-                int spelaredamage = Skada.Next(maxskada);
+                int spelaredamage = Skada.Next(maxskadaspelaren);
                 nuvaraneaihp -= spelaredamage;
                 Console.WriteLine(Spelarename + " attakerar " + aiName + " med en light attack och gör " + spelaredamage + " i skada");
                 Console.WriteLine(aiName + " har nu " + nuvaraneaihp + " i hp");
@@ -214,7 +293,7 @@ Console.WriteLine("Just");
             }
             else
             {
-                int spelaredamage = Skada.Next(2 * maxskada);
+                int spelaredamage = Skada.Next(2 * maxskadaspelaren);
                 nuvaraneaihp -= spelaredamage;
                 Console.WriteLine(Spelarename + " attakerar " + aiName + " med en hard attack och gör " + spelaredamage + " i skada");
                 Console.WriteLine(aiName + " har nu " + nuvaraneaihp + " i hp");
@@ -231,22 +310,22 @@ Console.WriteLine("Just");
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
-        if (tmpaitypavattack == 0)
+        if (tmpaitypavattack >= 0)
         {
             int tempmisschans = misschans.Next(100);
-            if (tempmisschans <= lightattackmisschansplayer)
+            if (tempmisschans <= lightattackmisschansai)
             {
                 Console.WriteLine(aiName + " försökta göra en lightattack men missade dig");
             }
             else
             {
-                int aidamage = Skada.Next(maxskada);
+                int aidamage = Skada.Next(maxskadaai);
                 nuvaranespelarhp -= aidamage;
                 Console.WriteLine(aiName + " attakerar " + Spelarename + " med en lightattack och gör " + aidamage + " i skada");
                 Console.WriteLine(Spelarename + " har nu " + nuvaranespelarhp + " i hp");
             }
         }
-        else if (tmpaitypavattack == 1)
+        else if (tmpaitypavattack <= 1)
         {
             int tempmisschans = misschans.Next(100);
             if (tempmisschans <= hardattackmisschansplayer)
@@ -255,7 +334,7 @@ Console.WriteLine("Just");
             }
             else
             {
-                int aidamage = Skada.Next(2 * maxskada);
+                int aidamage = Skada.Next(2 * maxskadaai);
                 nuvaranespelarhp -= aidamage;
                 Console.WriteLine(aiName + " attakerar " + Spelarename + " med en har attack och gör " + aidamage + " i skada");
                 Console.WriteLine(Spelarename + " har nu " + nuvaranespelarhp + " i hp");
