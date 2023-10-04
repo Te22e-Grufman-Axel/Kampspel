@@ -25,7 +25,7 @@ while (true)
     // ------------------------------------------------------------------
     string köranu = "nej";
     int runda = 0;
-    int nuvaranespelarhp = spelareHP;           //mer variablar som startar om varje runda
+    int nuvaranespelarhp = spelareHP;           //mer variablar som startar om varje match
     int nuvaraneaihp = aihp;
     Random aitypavattack = new Random();
     int tmpaitypavattack = aitypavattack.Next(2);
@@ -247,6 +247,7 @@ while (true)
         }
         else
         {
+            curentenemy = "2";
             Console.Clear();
             väljafiende();
         }
