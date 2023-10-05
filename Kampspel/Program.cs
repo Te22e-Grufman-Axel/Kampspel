@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Data.SqlTypes;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
 // ------------------------------------------------------------------
 int spelareHP = 100;
 int aihp = 100;
@@ -10,12 +12,17 @@ int hardattackmisschansplayer = 40;
 int lightattackmisschansai = 20;
 int hardattackmisschansai = 40;
 
+double coins = 100;
+double bet = 0;
+double coinsmulitplayer = 2;
+
 String curentenemy = "2";
 String inst = "";
 String instval = "";
 String Spelarename = ("Hero");
 String spelaretypavattack = "";          //massa variablar
 String aiName = ("Willmer");
+string lämmnabet = "";
 
 Random Skada = new Random();
 Random misschans = new Random();
@@ -160,22 +167,27 @@ while (true)
         if (curentenemy == "0")
         {
             fiende0();
+            coinsmulitplayer = 1.1;
         }
         else if (curentenemy == "1")
         {
             fiende1();
+            coinsmulitplayer = 1.5;
         }
         else if (curentenemy == "2")
-        {                                       //ascii art för fienden
+        {                                       //ascii art och vilken coinsmultiplayer man får för fienden
             fiende2();
+            coinsmulitplayer = 2;
         }
         else if (curentenemy == "3")
         {
             fiende3();
+            coinsmulitplayer = 3;
         }
         else if (curentenemy == "4")
         {
             fiende4();
+            coinsmulitplayer = 5;
 
         }
 
@@ -252,6 +264,60 @@ while (true)
             väljafiende();
         }
     }
+    // -----------------------------------------------------------------
+    void sattapengar()
+    {
+        Console.WriteLine("Välkommen till betningsmenyn");
+        Console.WriteLine("Här kan du betta dina coins");
+        Console.WriteLine("Du har just nu " + coins + " coins");
+        Console.WriteLine("Om du bettar och sen vinnar får du mer coins än du började med");
+        Console.WriteLine("Men om du förlorar så förlorar du coinsen du bettar");
+        Console.WriteLine("Man får också en större mulitplayer om man kör mot svårar fiender");
+        Console.WriteLine("Just nu är multiplaian på " + coinsmulitplayer);
+        Console.WriteLine("Just nu har du bettat " + bet + " coins");
+        Console.WriteLine("tryck på space för att lämna");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("Hur mycket vill du betta?");
+        lämmnabet = Console.ReadLine();
+        if (lämmnabet == " ")
+        {
+            Console.Clear();          //Här kan du betta pengar
+            startmeny();
+        }
+        else
+        {
+            string tmpbet = lämmnabet;
+            bool success = double.TryParse(tmpbet, out bet);
+            if (success == false)
+            {
+                Console.WriteLine("Det där var inte en siffra!");
+                bet = 0;
+                Console.ReadKey();
+                Console.Clear();
+                sattapengar();              //om man inte skriver en sifra
+                lämmnabet = "";
+            }
+            else if (success == true && bet > coins)
+            {
+                Console.WriteLine("Det där var mer än du har");
+                Console.WriteLine("Försökt igen");
+                Console.ReadKey();
+                bet = 0;             //om man försöker betta mer än man har
+                Console.Clear();
+                sattapengar();
+                lämmnabet = "";
+            }
+            else
+            {
+                coins = coins - bet;         //om det fungerar
+                Console.Clear();
+                sattapengar();
+                lämmnabet = "";
+            }
+        }
+    }
     // ------------------------------------------------------------------
     void startmeny()
     {
@@ -259,6 +325,7 @@ while (true)
         Console.WriteLine("Välkomen till Axels slagsmål spel");
         Console.WriteLine("För att gå in i instälnignar tryck på i");
         Console.WriteLine("För att välja fiende tryck på F");
+        Console.WriteLine("För att satsa pengar på vem som van tryck på P");
         Console.WriteLine("För att starta spelet tryck på en annan knapp");
         inst = Console.ReadLine();
         inst = inst.ToLower();
@@ -270,6 +337,10 @@ while (true)
         else if (inst == "f")
         {
             väljafiende();
+        }
+        else if (inst == "p")
+        {
+            sattapengar();
         }
         else
         {
@@ -297,7 +368,7 @@ while (true)
         spelaretypavattack = spelaretypavattack.ToLower();
         Console.WriteLine("");
         Console.WriteLine("");
-// ------------------------------------------------------------------
+        // ------------------------------------------------------------------
         if (spelaretypavattack == "l")
         {
             int tempmisschans = misschans.Next(100);
@@ -384,28 +455,33 @@ while (true)
         Console.Clear();
         runda++;
     }
-// ------------------------------------------------------------------
+    // ------------------------------------------------------------------
     if (nuvaranespelarhp <= 0 && nuvaraneaihp <= 0)
     {
         Console.WriteLine("Game over");
         Console.WriteLine("Båda dog och det blev ovagjort");
     }
     else if (nuvaranespelarhp <= 0)
-{                                                  //för att kolla vem som van
+    {                                                  //för att kolla vem som van
         Console.WriteLine("Game over");
         Console.WriteLine(aiName + " Vann och dödade " + Spelarename);
+        bet = 0;
     }
     else if (nuvaraneaihp <= 0)
     {
         Console.WriteLine("Game over");
         Console.WriteLine(Spelarename + " vann och dödade " + aiName);
+        coins = bet * coinsmulitplayer + coins;
+        coins = Math.Round(coins, 0);          //Räknar ut hur många coins man får om man vinner
+        bet = 0;
+        Console.WriteLine("Du van och har nu " + coins + " coins");
     }
     else
     {
         Console.WriteLine("Game over");
         Console.WriteLine("Slut på rundor");
     }
-// ------------------------------------------------------------------
+    // ------------------------------------------------------------------
     Console.WriteLine("");
     Console.WriteLine("");
     Console.WriteLine("");
